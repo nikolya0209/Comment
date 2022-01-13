@@ -17,12 +17,14 @@ class NetworkService {
         let session = URLSession.shared
         
        
-        session.dataTask(with: url) { (data, responce, error) in
+        session.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
-                print(json)
+                DispatchQueue.main.async {
+                    completion(json)
+                }
             } catch {
                 print(error)
             }
